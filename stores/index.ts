@@ -16,7 +16,17 @@ export const useLabelStore = defineStore('label',{
       labelTime:[
         dayjs().startOf('day').toDate(),
         dayjs().add(1,'day').startOf('day').toDate()
-      ] as [Date,Date]
+      ] as [Date,Date],
+      labelStageName:'label' as string,
+      labelSkipNum:100 as number,
     }
+  },
+  getters:{
+    labelTimeStart():number{
+      return dayjs(this.labelTime[0]).valueOf()
+    },
+    labelTimeStop():number{
+      return dayjs(this.labelTime[1]).valueOf()
+    },
   }
 })
