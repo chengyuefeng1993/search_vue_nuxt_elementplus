@@ -23,6 +23,15 @@ export default defineNuxtConfig({
   vueuse: {
     ssrHandlers: true,
   },
+  components:true,
+  vite: {
+    plugins: [
+      Components({
+        dts: true,
+        resolvers: [IconsResolver({})],
+      }),
+    ],
+  },
   windicss: {
     analyze: {
       analysis: {

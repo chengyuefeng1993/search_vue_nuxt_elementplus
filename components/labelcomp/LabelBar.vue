@@ -1,8 +1,13 @@
 <template>
   <div class="label-bar">
     <el-space>
-      <el-date-picker v-model="labelStore.labelTime" type="datetimerange" teleported :shortcuts="shortcuts"/>
-      <el-select></el-select>
+      <div style="display: inline-block">
+      <el-date-picker v-model="labelStore.labelTime" type="datetimerange" :teleported="true" :shortcuts="shortcuts"/>
+      </div>
+      <el-select v-model="labelStore.labelStageName">
+        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"
+                   :teleported="true"/>
+      </el-select>
     </el-space>
   </div>
   <el-divider style="margin: 0"/>
@@ -23,6 +28,17 @@ onMounted(() => {
     labelStore.labelSkipNum = Number(skipNum)
   }
 })
+
+const options = [
+  {
+    label: '标注',
+    value: 'label'
+  },
+  {
+    label: '一审',
+    value: 'review'
+  }
+]
 
 const shortcuts = [
   {
