@@ -1,13 +1,27 @@
 <template>
   <div class="label-bar">
     <el-space>
-      <div style="display: inline-block">
-      <el-date-picker v-model="labelStore.labelTime" type="datetimerange" :teleported="true" :shortcuts="shortcuts"/>
-      </div>
-      <el-select v-model="labelStore.labelStageName">
-        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"
-                   :teleported="true"/>
-      </el-select>
+      <ClientOnly>
+        <el-date-picker v-model="labelStore.labelTime" type="datetimerange" teleported :shortcuts="shortcuts"
+                        style="width: 360px"/>
+      </ClientOnly>
+      <ClientOnly>
+        <el-select v-model="labelStore.labelStageName" style="width: 75px">
+          <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"
+                     teleported/>
+        </el-select>
+      </ClientOnly>
+      <el-input v-model="labelStore.labelSkipNum" @input="labelStore.labelSkipNumChange" style="width: 170px">
+        <template #prepend>
+          <span>暂跳额度：</span>
+        </template>
+      </el-input>
+      <el-input v-model="labelStore.labelId" :maxlength="5" style="width: 150px" clearable
+                @keydown.enter="labelStore.onLabelSearch" @input="labelStore.labelIdChange">
+        <template #append>
+          <el-button @click="labelStore.onLabelSearch">查询</el-button>
+        </template>
+      </el-input>
     </el-space>
   </div>
   <el-divider style="margin: 0"/>

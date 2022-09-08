@@ -1,32 +1,124 @@
 import {defineStore} from "pinia";
 import dayjs from "dayjs";
+import {ElMessage} from "element-plus";
+import {Stage, Tag, Skip, Review, DataType} from "~/stores/types";
+import axios from "axios";
 
-export const useMainStore = defineStore('main',{
-  state(){
+export const useMainStore = defineStore('main', {
+  state() {
     return {
-      routeUrl:'' as string,
+      routeUrl: '' as string,
     }
   },
 })
 
-export const useLabelStore = defineStore('label',{
-  state(){
+export const useLabelStore = defineStore('label', {
+  state() {
     return {
-      labelId:'' as string,
-      labelTime:[
+      labelId: '' as string,
+      labelTime: [
         dayjs().startOf('day').toDate(),
-        dayjs().add(1,'day').startOf('day').toDate()
-      ] as [Date,Date],
-      labelStageName:'label' as string,
-      labelSkipNum:100 as number,
+        dayjs().add(1, 'day').startOf('day').toDate()
+      ] as [Date, Date],
+      labelStageName: 'label' as string,
+      labelSkipNum: 100 as number,
+      stageList: {} as Stage,
+      tagList: [] as Array<Tag>,
+      skipList: [] as Array<Skip>,
+      labelIsLoading: 0 as number,
     }
   },
-  getters:{
-    labelTimeStart():number{
+  getters: {
+    labelTimeStart(): number {
       return dayjs(this.labelTime[0]).valueOf()
     },
-    labelTimeStop():number{
+    labelTimeStop(): number {
       return dayjs(this.labelTime[1]).valueOf()
+    },
+    isEmpty() {
+      return !(Object.getOwnPropertyNames(this.stageList).length > 0 || this.tagList.length > 0 || this.skipList.length > 0)
+    },
+    isLoading(){
+      if (this.labelIsLoading == 0){
+        return false
+      }else if (this.labelIsLoading == 1){
+        return true
+      }else if (this.labelIsLoading == 2){
+        return true
+      }else if (this.labelIsLoading == 3){
+        return true
+      }else if (this.labelIsLoading == 4){
+        return false
+      }
+    }
+  },
+  actions: {
+    onLabelSearch() {
+      if (this.labelId != '') {
+        this.labelIsLoading = 1
+        this.getStageData()
+        this.getTagData()
+        this.getSkipData()
+      } else {
+        ElMessage({
+          message: '请输入ID！',
+          type: 'error',
+          duration: 1500,
+        })
+      }
+    },
+    labelIdChange() {
+      window.localStorage.setItem('labelId', this.labelId)
+    },
+    labelSkipNumChange() {
+      window.localStorage.setItem('skipNum',this.labelSkipNum)
+    },
+    getStageData() {
+      axios.get('https://api.chengyuefeng.fun/stagedata', {
+        params: {
+          sourceid: this.labelId,
+        }
+      }).then(res => {
+        if (res.data.code == 200) {
+          this.stageList = res.data.result
+        } else {
+          this.stageList = {}
+        }
+        this.labelIsLoading += 1
+      })
+    },
+    getTagData() {
+      axios.get('https://api.chengyuefeng.fun/tagdata', {
+        params: {
+          sourceid: this.labelId,
+          stagename: this.labelStageName,
+          tmstart: this.labelTimeStart,
+          tmstop: this.labelTimeStop,
+        }
+      }).then(res => {
+        if (res.data.code == 200) {
+          let list = res.data.result
+          this.tagList = list.splice(0, list.length - 2)
+        } else {
+          this.tagList = []
+        }
+        this.labelIsLoading += 1
+      })
+    },
+    getSkipData() {
+      axios.get('https://api.chengyuefeng.fun/skipdata', {
+        params: {
+          sourceid: this.labelId,
+          stagename: this.labelStageName,
+        }
+      }).then(res => {
+        if (res.data.code == 200) {
+          this.skipList = res.data.result
+        } else {
+          this.skipList = []
+        }
+        this.labelIsLoading += 1
+      })
     },
   }
 })
