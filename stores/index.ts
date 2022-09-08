@@ -122,3 +122,58 @@ export const useLabelStore = defineStore('label', {
     },
   }
 })
+
+
+export const useReviewStore = defineStore('review',{
+  state(){
+    return {
+      reviewId:'' as string,
+      reviewTime:[
+        dayjs().startOf('day').toDate(),
+        dayjs().add(1,'day').startOf('day').toDate()
+      ] as [Date,Date],
+      reviewStageName:'allReview' as string,
+      pageNum:1 as number,
+      pageSize:30 as number,
+      userName:'' as string,
+      dataId:'' as string,
+      reviewList:{} as Review,
+      reviewIsLoading:false as boolean,
+    }
+  },
+  getters:{
+    reviewTimeStart():number{
+      return dayjs(this.reviewTime[0]).valueOf()
+    },
+    reviewTimeStop():number{
+      return dayjs(this.reviewTime[1]).valueOf()
+    },
+  },
+  actions: {
+    onReview() {
+    },
+    reviewIdChange() {
+      window.localStorage.setItem('reviewId',this.reviewId)
+    },
+    getReviewData(){
+      axios.get('https://api.chengyuefeng.fun/review',{
+        params:{
+          sourceid:this.reviewId,
+          reviewStageName:this.reviewStageName,
+          tmstart:this.reviewTimeStart,
+          tmstop:this.reviewTimeStop,
+          username:this.userName,
+          dataid:this.dataId,
+          pagenum:this.pageNum,
+          pagesize:this.pageSize,
+        }
+      }).then(res=>{
+        if (res.data.code == 200){
+          this.reviewList = res.data.result
+        }else {
+          this.reviewList = {}
+        }
+      })
+    }
+  }
+})

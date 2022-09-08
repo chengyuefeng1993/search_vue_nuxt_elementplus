@@ -11,8 +11,7 @@
         box-shadow: var(--el-box-shadow);
         text-align: center;
         line-height: 40px;
-        color: #ffffff;
-      "
+        color: #ffffff;"
       >
         UP
       </div>
