@@ -1,6 +1,6 @@
 <template>
   <div class="label-bar">
-    <el-space>
+    <el-space wrap>
       <ClientOnly>
         <el-date-picker v-model="labelStore.labelTime" type="datetimerange" teleported :shortcuts="shortcuts"
                         style="width: 360px"/>

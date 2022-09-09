@@ -1,6 +1,6 @@
 <template>
   <div class="review-bar">
-    <el-space>
+    <el-space wrap>
       <ClientOnly>
         <el-date-picker v-model="reviewStore.reviewTime" type="datetimerange" teleported :shortcuts="shortcuts"
                         style="width: 360px"/>
@@ -14,7 +14,7 @@
       <el-input placeholder="用户名" v-model="reviewStore.userName" style="width: 160px"/>
       <el-input placeholder="dataId" v-model="reviewStore.dataId" style="width: 90px" clearable/>
       <el-input v-model="reviewStore.reviewId" :maxlength="5" style="width: 150px" clearable
-                @keydown.enter="reviewStore.onReview" @input="reviewStore.reviewIdChange">
+                @keydown.enter="reviewStore.onReview" @input="reviewStore.reviewIdChange" placeholder="包ID">
         <template #append>
           <el-button @click="reviewStore.onReview">查询</el-button>
         </template>

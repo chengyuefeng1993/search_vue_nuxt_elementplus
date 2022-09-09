@@ -74,7 +74,7 @@ export const useLabelStore = defineStore('label', {
       window.localStorage.setItem('skipNum',this.labelSkipNum)
     },
     getStageData() {
-      axios.get('https://api.chengyuefeng.fun/stagedata', {
+      axios.get('/api/stagedata', {
         params: {
           sourceid: this.labelId,
         }
@@ -88,7 +88,7 @@ export const useLabelStore = defineStore('label', {
       })
     },
     getTagData() {
-      axios.get('https://api.chengyuefeng.fun/tagdata', {
+      axios.get('/api/tagdata', {
         params: {
           sourceid: this.labelId,
           stagename: this.labelStageName,
@@ -105,8 +105,8 @@ export const useLabelStore = defineStore('label', {
         this.labelIsLoading += 1
       })
     },
-    getSkipData() {
-      axios.get('https://api.chengyuefeng.fun/skipdata', {
+    async getSkipData() {
+      await axios.get('/api/skipdata', {
         params: {
           sourceid: this.labelId,
           stagename: this.labelStageName,
@@ -151,15 +151,24 @@ export const useReviewStore = defineStore('review',{
   },
   actions: {
     onReview() {
+      if (this.reviewId != ''){
+        this.getReviewData()
+      }else {
+        ElMessage({
+          message: '请输入ID！',
+          type: 'error',
+          duration: 1500,
+        })
+      }
     },
     reviewIdChange() {
       window.localStorage.setItem('reviewId',this.reviewId)
     },
-    getReviewData(){
-      axios.get('https://api.chengyuefeng.fun/review',{
+    async getReviewData(){
+      await axios.get('https://api.chengyuefeng.fun/review',{
         params:{
           sourceid:this.reviewId,
-          reviewStageName:this.reviewStageName,
+          stagename:this.reviewStageName,
           tmstart:this.reviewTimeStart,
           tmstop:this.reviewTimeStop,
           username:this.userName,
@@ -168,6 +177,7 @@ export const useReviewStore = defineStore('review',{
           pagesize:this.pageSize,
         }
       }).then(res=>{
+        console.log(res)
         if (res.data.code == 200){
           this.reviewList = res.data.result
         }else {

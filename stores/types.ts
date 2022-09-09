@@ -31,7 +31,7 @@ type Skip = {
 type Review = {
   allowNineRectGrid?: boolean
   allowUserInputText?: number
-  data?: DataType[]
+  data?: Array<DataType>
   dataAccessWay?: string
   dataType?: string
   fullscreenShortKey?: string
