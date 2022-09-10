@@ -2,16 +2,16 @@ import {useQuery} from "h3";
 import axios from "axios";
 
 
-export default defineEventHandler((event) => {
+export default defineEventHandler(async (event) => {
   const props = useQuery(event)
-  return axios.get('http://114.116.41.110:4002/tagdata', {
+  return await axios.get('http://114.116.41.110:4002/tagdata', {
     params: {
       sourceid: props.sourceid,
       stagename: props.stagename,
       tmstart: props.tmstart,
       tmstop: props.tmstop,
     }
-  }).then(response => {
-    return response.data
+  }).then(res => {
+    return res.data
   })
 })

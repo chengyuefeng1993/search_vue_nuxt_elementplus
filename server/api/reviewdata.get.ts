@@ -3,9 +3,9 @@ import {useQuery} from "h3";
 import {Review} from "~/stores/types";
 
 
-export default defineEventHandler((event) => {
+export default defineEventHandler(async (event) => {
   const props = useQuery(event)
-  return axios.get('http://114.116.41.110:4002/review',{
+  return await axios.get('http://114.116.41.110:4002/review',{
     params:{
       sourceid:props.sourceid,
       stagename:props.stagename,
