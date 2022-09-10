@@ -18,7 +18,7 @@ export default defineEventHandler((event) => {
     }
   }).then(res => {
     console.log(res.data)
-    return res.data as Review
+    return res.data
   })
 })
 
