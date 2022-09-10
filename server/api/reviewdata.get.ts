@@ -17,6 +17,7 @@ export default defineEventHandler((event) => {
       pagesize:props.pagesize
     }
   }).then(res => {
+    console.log(res.data)
     return res.data as Review
   })
 })

@@ -73,8 +73,8 @@ export const useLabelStore = defineStore('label', {
     labelSkipNumChange() {
       window.localStorage.setItem('skipNum',this.labelSkipNum)
     },
-    getStageData() {
-      axios.get('/api/stagedata', {
+    async getStageData() {
+      await axios.get('/api/stagedata', {
         params: {
           sourceid: this.labelId,
         }
@@ -87,8 +87,8 @@ export const useLabelStore = defineStore('label', {
         this.labelIsLoading += 1
       })
     },
-    getTagData() {
-      axios.get('/api/tagdata', {
+    async getTagData() {
+      await axios.get('/api/tagdata', {
         params: {
           sourceid: this.labelId,
           stagename: this.labelStageName,
