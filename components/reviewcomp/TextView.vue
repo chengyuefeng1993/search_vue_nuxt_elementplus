@@ -25,5 +25,6 @@ const {item,historyList} = defineProps(['item','historyList'])
   border-width: 1px;
   border-style: solid;
   padding: 5px;
+  box-shadow: var(--el-box-shadow-light);
 }
 </style>

@@ -17,7 +17,8 @@
         </template>
       </el-input>
       <el-input v-model="labelStore.labelId" :maxlength="5" style="width: 150px" clearable
-                @keydown.enter="labelStore.onLabelSearch" @input="labelStore.labelIdChange">
+                @keydown.enter="labelStore.onLabelSearch" @input="labelStore.labelIdChange"
+                @clear="labelStore.labelIdChange">
         <template #append>
           <el-button @click="labelStore.onLabelSearch">查询</el-button>
         </template>

@@ -71,6 +71,7 @@ const imageList = (photoId: string, num: number) => {
   padding: 5px;
   text-align: center;
   font-size: 14px;
+  box-shadow: var(--el-box-shadow-light);
 }
 
 .caption {
