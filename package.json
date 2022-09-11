@@ -11,6 +11,7 @@
     "nuxt": "3.0.0-rc.9"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.0.9",
     "@pinia/nuxt": "^0.4.2",
     "@vueuse/nuxt": "^9.2.0",
     "add": "^2.0.6",

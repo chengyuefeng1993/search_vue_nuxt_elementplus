@@ -38,16 +38,16 @@ export const useLabelStore = defineStore('label', {
     isEmpty() {
       return !(Object.getOwnPropertyNames(this.stageList).length > 0 || this.tagList.length > 0 || this.skipList.length > 0)
     },
-    isLoading(){
-      if (this.labelIsLoading == 0){
+    isLoading() {
+      if (this.labelIsLoading == 0) {
         return false
-      }else if (this.labelIsLoading == 1){
+      } else if (this.labelIsLoading == 1) {
         return true
-      }else if (this.labelIsLoading == 2){
+      } else if (this.labelIsLoading == 2) {
         return true
-      }else if (this.labelIsLoading == 3){
+      } else if (this.labelIsLoading == 3) {
         return true
-      }else if (this.labelIsLoading == 4){
+      } else if (this.labelIsLoading == 4) {
         return false
       }
     }
@@ -71,10 +71,10 @@ export const useLabelStore = defineStore('label', {
       window.localStorage.setItem('labelId', this.labelId)
     },
     labelSkipNumChange() {
-      window.localStorage.setItem('skipNum',this.labelSkipNum)
+      window.localStorage.setItem('skipNum', this.labelSkipNum)
     },
     async getStageData() {
-      await axios.get('/api/stagedata', {
+      await axios.get('https://api.chengyuefeng.fun/stagedata', {
         params: {
           sourceid: this.labelId,
         }
@@ -88,7 +88,7 @@ export const useLabelStore = defineStore('label', {
       })
     },
     async getTagData() {
-      await axios.get('/api/tagdata', {
+      await axios.get('https://api.chengyuefeng.fun/tagdata', {
         params: {
           sourceid: this.labelId,
           stagename: this.labelStageName,
@@ -106,7 +106,7 @@ export const useLabelStore = defineStore('label', {
       })
     },
     async getSkipData() {
-      await axios.get('/api/skipdata', {
+      await axios.get('https://api.chengyuefeng.fun/skipdata', {
         params: {
           sourceid: this.labelId,
           stagename: this.labelStageName,
@@ -124,36 +124,39 @@ export const useLabelStore = defineStore('label', {
 })
 
 
-export const useReviewStore = defineStore('review',{
-  state(){
+export const useReviewStore = defineStore('review', {
+  state() {
     return {
-      reviewId:'' as string,
-      reviewTime:[
+      reviewId: '' as string,
+      reviewTime: [
         dayjs().startOf('day').toDate(),
-        dayjs().add(1,'day').startOf('day').toDate()
-      ] as [Date,Date],
-      reviewStageName:'allReview' as string,
-      pageNum:1 as number,
-      pageSize:30 as number,
-      userName:'' as string,
-      dataId:'' as string,
-      reviewList:{} as Review,
-      reviewIsLoading:false as boolean,
+        dayjs().add(1, 'day').startOf('day').toDate()
+      ] as [Date, Date],
+      reviewStageName: 'allReview' as string,
+      pageNum: 1 as number,
+      pageSize: 30 as number,
+      userName: '' as string,
+      dataId: '' as string,
+      reviewList: {} as Review,
+      reviewIsLoading: false as boolean,
+      isFilter: false as boolean,
+      imgIsShow: false as boolean,
     }
   },
-  getters:{
-    reviewTimeStart():number{
+  getters: {
+    reviewTimeStart(): number {
       return dayjs(this.reviewTime[0]).valueOf()
     },
-    reviewTimeStop():number{
+    reviewTimeStop(): number {
       return dayjs(this.reviewTime[1]).valueOf()
     },
   },
   actions: {
-    onReview() {
-      if (this.reviewId != ''){
+    onReviewSearch() {
+      if (this.reviewId != '') {
+        this.reviewIsLoading = true
         this.getReviewData()
-      }else {
+      } else {
         ElMessage({
           message: '请输入ID！',
           type: 'error',
@@ -162,27 +165,27 @@ export const useReviewStore = defineStore('review',{
       }
     },
     reviewIdChange() {
-      window.localStorage.setItem('reviewId',this.reviewId)
+      window.localStorage.setItem('reviewId', this.reviewId)
     },
-    async getReviewData(){
-      await axios.get('https://api.chengyuefeng.fun/review',{
-        params:{
-          sourceid:this.reviewId,
-          stagename:this.reviewStageName,
-          tmstart:this.reviewTimeStart,
-          tmstop:this.reviewTimeStop,
-          username:this.userName,
-          dataid:this.dataId,
-          pagenum:this.pageNum,
-          pagesize:this.pageSize,
+    async getReviewData() {
+      await axios.get('https://api.chengyuefeng.fun/review', {
+        params: {
+          sourceid: this.reviewId,
+          stagename: this.reviewStageName,
+          tmstart: this.reviewTimeStart,
+          tmstop: this.reviewTimeStop,
+          username: this.userName,
+          dataid: this.dataId,
+          pagenum: this.pageNum,
+          pagesize: this.pageSize,
         }
-      }).then(res=>{
-        console.log(res)
-        if (res.data.code == 200){
+      }).then(res => {
+        if (res.data.code == 200) {
           this.reviewList = res.data.result
-        }else {
+        } else {
           this.reviewList = {}
         }
+        this.reviewIsLoading = false
       })
     }
   }

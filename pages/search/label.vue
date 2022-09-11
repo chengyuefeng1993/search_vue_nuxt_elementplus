@@ -21,8 +21,16 @@ import {useLabelStore} from "~/stores";
 import StageData from "~/components/labelcomp/StageData.vue";
 import TagData from "~/components/labelcomp/TagData.vue";
 import SkipData from "~/components/labelcomp/SkipData.vue";
+import {onMounted} from "#imports";
 
 const labelStore = useLabelStore()
+onMounted(() => {
+  window.onfocus = () => {
+    if (Object.getOwnPropertyNames(labelStore.stageList).length > 0) {
+      labelStore.onLabelSearch()
+    }
+  }
+})
 </script>
 <style scoped>
 .label-view {
