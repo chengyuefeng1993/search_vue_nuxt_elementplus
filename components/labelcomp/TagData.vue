@@ -55,5 +55,6 @@ const filterHandler = (value: string,
 <style scoped>
 .tag {
   border: 1px solid #dcdfe6;
+  box-shadow: var(--el-box-shadow-light);
 }
 </style>

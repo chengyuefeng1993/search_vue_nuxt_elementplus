@@ -30,5 +30,6 @@ const isShow = computed(() => {
 .stage {
   border: 1px solid #dcdfe6;
   padding: 8px;
+  box-shadow: var(--el-box-shadow-light);
 }
 </style>
