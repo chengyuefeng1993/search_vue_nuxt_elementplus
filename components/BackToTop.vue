@@ -1,18 +1,20 @@
 <template>
-  <div class="back-to-top" ref="backTop" @click="backToTop">
+  <div class="back-to-top" ref="backTop" @click="mainStore.backToTop">
     <span style="font-size: 14px;font-weight: bold">返回顶部</span>
   </div>
 </template>
 <script setup lang="ts">
 
 import {onMounted, ref} from "#imports";
+import {useMainStore} from "~/stores";
 
 const backTop = ref(null)
+const mainStore = useMainStore()
 
-const backToTop = () => {
-  document.body.scrollTop = 0
-  document.documentElement.scrollTop = 0
-}
+// const backToTop = () => {
+//   document.body.scrollTop = 0
+//   document.documentElement.scrollTop = 0
+// }
 onMounted(() => {
   window.onscroll = () => {
   let res = document.body.scrollTop || document.documentElement.scrollTop;
@@ -24,6 +26,7 @@ onMounted(() => {
     }
   }
 })
+
 </script>
 <style scoped>
 .back-to-top {

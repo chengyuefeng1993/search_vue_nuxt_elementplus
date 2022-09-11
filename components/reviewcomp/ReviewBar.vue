@@ -21,14 +21,13 @@
       </el-input>
       <el-switch
           v-model="reviewStore.isFilter"
-          class="mb-2"
           style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
           active-text="开启过滤"
           inactive-text="关闭过滤"
+          v-show="reviewStore.reviewList.totalSize>0"
       />
       <el-switch
           v-model="reviewStore.imgIsShow"
-          class="mb-2"
           style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
           active-text="显示图片"
           inactive-text="隐藏图片"

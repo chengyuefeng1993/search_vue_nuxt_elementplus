@@ -10,6 +10,12 @@ export const useMainStore = defineStore('main', {
       routeUrl: '' as string,
     }
   },
+  actions:{
+    backToTop(){
+      document.body.scrollTop = 0
+      document.documentElement.scrollTop = 0
+    }
+  }
 })
 
 export const useLabelStore = defineStore('label', {
@@ -187,6 +193,6 @@ export const useReviewStore = defineStore('review', {
         }
         this.reviewIsLoading = false
       })
-    }
+    },
   }
 })

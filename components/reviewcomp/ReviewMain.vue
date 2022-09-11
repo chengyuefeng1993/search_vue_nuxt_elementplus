@@ -9,20 +9,22 @@
         <div class="pager">
           <el-pagination :total="total" layout="total,prev,pager,next,jumper,sizes"
                          v-model:current-page="reviewStore.pageNum" v-model:page-size="reviewStore.pageSize"
-                         :page-sizes="pageSizes" background v-show="total !== 0"/>
+                         :page-sizes="pageSizes" background v-show="total !== 0"
+                         @current-change="pageNumChange" @size-change="pageSizeChange"/>
         </div>
       </ClientOnly>
     </div>
   </transition>
 </template>
 <script setup lang="ts">
-import {useReviewStore} from "~/stores";
+import {useMainStore, useReviewStore} from "~/stores";
 import {computed} from "#imports";
 import TextView from './TextView.vue'
 import VideoView from './VideoView.vue'
 
 
 const reviewStore = useReviewStore()
+const mainStore = useMainStore()
 
 const view = computed(() => {
   if (reviewStore.reviewList.dataType == 'text') {
@@ -47,6 +49,20 @@ const total = computed(() => {
     return 0
   }
 })
+
+const pageNumChange = (num:number) => {
+  reviewStore.pageNum = num
+  reviewStore.onReviewSearch()
+  mainStore.backToTop()
+}
+
+const pageSizeChange = () => {
+  reviewStore.pageNum = 1
+  window.localStorage.setItem('pageSize',reviewStore.pageSize.toString())
+  reviewStore.onReviewSearch()
+  mainStore.backToTop()
+}
+
 </script>
 <style scoped>
 .review-main {
