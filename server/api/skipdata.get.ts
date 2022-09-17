@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
       sourceid: props.sourceid,
       stagename: props.stagename,
     }
-  }).then(response => {
-    return response.data
+  }).then(res => {
+    return res.data
   })
 })
