@@ -34,7 +34,7 @@ const view = computed(() => {
   }
 })
 
-const pageSizes = [10, 30, 50, 100, 200, 500, 1000]
+const pageSizes = [10, 30, 50, 100, 200, 500]
 const reviewData = computed(() => {
   if (reviewStore.isFilter) {
     return reviewStore.reviewList.data?.filter((a) => a?.reviewUser == null)
