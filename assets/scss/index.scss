@@ -1,1 +1,19 @@
 @use "element-plus/dist/index.css";
+
+
+a {
+  color: #409EFF;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #337ecc;
+}
+
+a:active {
+  color: #a0cfff;
+}
+
+.caption a{
+  font-size: 14px;
+}
