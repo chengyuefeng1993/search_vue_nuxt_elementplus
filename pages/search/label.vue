@@ -31,18 +31,7 @@ onMounted(() => {
       labelStore.onLabelSearch()
     }
   }
-   onMounted(async () => {
 
-    let a = await axios('/api/stagedata', {
-      method: 'get',
-      params: {
-        id: '111',
-        name: '222'
-      }
-    })
-    let data = a.data
-    console.log(data);
-  })
 })
 </script>
 <style scoped>
