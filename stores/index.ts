@@ -80,7 +80,7 @@ export const useLabelStore = defineStore('label', {
       window.localStorage.setItem('skipNum', this.labelSkipNum)
     },
     async getStageData() {
-      await axios.get('https://api.chengyuefeng.fun/stagedata', {
+      await axios.get('https://stagedata-search-tvqfysxaho.cn-beijing.fcapp.run', {
         params: {
           sourceid: this.labelId,
         }
@@ -94,7 +94,7 @@ export const useLabelStore = defineStore('label', {
       })
     },
     async getTagData() {
-      await axios.get('https://api.chengyuefeng.fun/tagdata', {
+      await axios.get('https://tagdata-search-fecerpresb.cn-beijing.fcapp.run', {
         params: {
           sourceid: this.labelId,
           stagename: this.labelStageName,
@@ -112,7 +112,7 @@ export const useLabelStore = defineStore('label', {
       })
     },
     async getSkipData() {
-      await axios.get('https://api.chengyuefeng.fun/skipdata', {
+      await axios.get('https://skipdata-search-iqcsnkcpfh.cn-beijing.fcapp.run', {
         params: {
           sourceid: this.labelId,
           stagename: this.labelStageName,
@@ -174,7 +174,7 @@ export const useReviewStore = defineStore('review', {
       window.localStorage.setItem('reviewId', this.reviewId)
     },
     async getReviewData() {
-      await axios.get('https://api.chengyuefeng.fun/review', {
+      await axios.get('https://review-search-bhkbqhmaps.cn-beijing.fcapp.run', {
         params: {
           sourceid: this.reviewId,
           stagename: this.reviewStageName,
